@@ -1,0 +1,1169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище Lombard_newModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Archiv_dogovor">
+          <Key>
+            <PropertyRef Name="ID_Archiv_dogovor" />
+          </Key>
+          <Property Name="ID_Archiv_dogovor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Client_Id" Type="int" Nullable="false" />
+          <Property Name="ID_Dogovor" Type="int" Nullable="false" />
+          <Property Name="Predmet" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Ocenochna_stoimost" Type="money" Nullable="false" />
+          <Property Name="Vudano" Type="money" Nullable="false" />
+          <Property Name="Procent" Type="money" Nullable="false" />
+          <Property Name="Opisanie" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Date_Start" Type="date" Nullable="false" />
+          <Property Name="Date_Finish" Type="date" Nullable="false" />
+          <Property Name="Date_Start_prod" Type="date" Nullable="false" />
+          <Property Name="Date_Finish_prod" Type="date" Nullable="false" />
+          <Property Name="Ves_All" Type="float" Nullable="false" />
+          <Property Name="Ves_zachet" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Archiv_prod">
+          <Key>
+            <PropertyRef Name="ID_Archiv_prod" />
+          </Key>
+          <Property Name="ID_Archiv_prod" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Dogovor_Id" Type="int" Nullable="false" />
+          <Property Name="ID_Prodlenie" Type="int" Nullable="false" />
+          <Property Name="Date_start_prod" Type="date" Nullable="false" />
+          <Property Name="Date_finish_prod" Type="date" Nullable="false" />
+          <Property Name="Price" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ID_Client" />
+          </Key>
+          <Property Name="ID_Client" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name_" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Father_name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Tel" Type="nvarchar" MaxLength="12" Nullable="false" />
+          <Property Name="BD" Type="date" Nullable="false" />
+          <Property Name="Seria_pasport" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Number_pasport" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Vudan" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="INN" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Propiska" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Dogovor">
+          <Key>
+            <PropertyRef Name="ID_Dogovor" />
+          </Key>
+          <Property Name="ID_Dogovor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Client_Id" Type="int" Nullable="false" />
+          <Property Name="Predmet" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Ocenochna_stoimost" Type="money" Nullable="false" />
+          <Property Name="Vudano" Type="money" Nullable="false" />
+          <Property Name="Procent" Type="money" Nullable="false" />
+          <Property Name="Opisanie" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Date_Start" Type="date" Nullable="false" />
+          <Property Name="Date_Finish" Type="date" Nullable="false" />
+          <Property Name="Date_Start_prod" Type="date" Nullable="false" />
+          <Property Name="Date_Finish_prod" Type="date" Nullable="false" />
+          <Property Name="Ves_All" Type="float" Nullable="false" />
+          <Property Name="Ves_zachet" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Prodlenie">
+          <Key>
+            <PropertyRef Name="ID_Prodlenie" />
+          </Key>
+          <Property Name="ID_Prodlenie" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Dogovor_Id" Type="int" Nullable="false" />
+          <Property Name="Date_start_prod" Type="date" Nullable="false" />
+          <Property Name="Date_finish_prod" Type="date" Nullable="false" />
+          <Property Name="Price" Type="money" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Archiv_dogovor_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Archiv_dogovor" Type="Self.Archiv_dogovor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ID_Client" />
+            </Principal>
+            <Dependent Role="Archiv_dogovor">
+              <PropertyRef Name="Client_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Archiv_prod_Archiv_dogovor">
+          <End Role="Archiv_dogovor" Type="Self.Archiv_dogovor" Multiplicity="1" />
+          <End Role="Archiv_prod" Type="Self.Archiv_prod" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Archiv_dogovor">
+              <PropertyRef Name="ID_Archiv_dogovor" />
+            </Principal>
+            <Dependent Role="Archiv_prod">
+              <PropertyRef Name="Dogovor_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dogovor_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Dogovor" Type="Self.Dogovor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ID_Client" />
+            </Principal>
+            <Dependent Role="Dogovor">
+              <PropertyRef Name="Client_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Prodlenie_Dogovor">
+          <End Role="Dogovor" Type="Self.Dogovor" Multiplicity="1" />
+          <End Role="Prodlenie" Type="Self.Prodlenie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dogovor">
+              <PropertyRef Name="ID_Dogovor" />
+            </Principal>
+            <Dependent Role="Prodlenie">
+              <PropertyRef Name="Dogovor_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="Day_Now" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="pro" />
+        <Function Name="stp_Arhiv_Dogovor_Prodlenia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="pro">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="stp_Delete_Archiv_dogovor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="pro">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="stp_Delete_Archiv_prod" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="pro">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="stp_Delete_Client" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="pro">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="stp_Delete_Dogovor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="pro">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="stp_Delete_Prodlenie" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="pro">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="stp_Dogovor_Client_ID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="pro">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="stp_Dogovor_Update_Date" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="pro">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="Date_Start_prod" Type="date" Mode="In" />
+          <Parameter Name="Date_Finish_prod" Type="date" Mode="In" />
+        </Function>
+        <Function Name="stp_Info_Archiv_dogovor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="pro" />
+        <Function Name="stp_Info_Client" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="pro" />
+        <Function Name="stp_Info_Dogovor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="pro" />
+        <Function Name="stp_insert_Archiv_dogovor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="pro">
+          <Parameter Name="Client_Id" Type="int" Mode="In" />
+          <Parameter Name="ID_Dogovor" Type="int" Mode="In" />
+          <Parameter Name="Predmet" Type="nvarchar" Mode="In" />
+          <Parameter Name="Ocenochna_stoimost" Type="money" Mode="In" />
+          <Parameter Name="Vudano" Type="money" Mode="In" />
+          <Parameter Name="Procent" Type="money" Mode="In" />
+          <Parameter Name="Opisanie" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Date_Start" Type="date" Mode="In" />
+          <Parameter Name="Date_Finish" Type="date" Mode="In" />
+          <Parameter Name="Date_Start_prod" Type="date" Mode="In" />
+          <Parameter Name="Date_Finish_prod" Type="date" Mode="In" />
+          <Parameter Name="Ves_All" Type="float" Mode="In" />
+          <Parameter Name="Ves_zachet" Type="float" Mode="In" />
+        </Function>
+        <Function Name="stp_insert_Arhiv_Prodlenie" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="pro">
+          <Parameter Name="Dogovor_Id" Type="int" Mode="In" />
+          <Parameter Name="ID_Prodlenie" Type="int" Mode="In" />
+          <Parameter Name="Date_start_prod" Type="date" Mode="In" />
+          <Parameter Name="Date_finish_prod" Type="date" Mode="In" />
+          <Parameter Name="Price" Type="money" Mode="In" />
+        </Function>
+        <Function Name="stp_insert_Client" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="pro">
+          <Parameter Name="Name_" Type="nvarchar" Mode="In" />
+          <Parameter Name="Father_name" Type="nvarchar" Mode="In" />
+          <Parameter Name="Surname" Type="nvarchar" Mode="In" />
+          <Parameter Name="Tel" Type="nvarchar" Mode="In" />
+          <Parameter Name="BD" Type="date" Mode="In" />
+          <Parameter Name="Seria_pasport" Type="nvarchar" Mode="In" />
+          <Parameter Name="Number_pasport" Type="nvarchar" Mode="In" />
+          <Parameter Name="Vudan" Type="nvarchar" Mode="In" />
+          <Parameter Name="INN" Type="nvarchar" Mode="In" />
+          <Parameter Name="Propiska" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="stp_insert_Dogovor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="pro">
+          <Parameter Name="Client_Id" Type="int" Mode="In" />
+          <Parameter Name="Predmet" Type="nvarchar" Mode="In" />
+          <Parameter Name="Ocenochna_stoimost" Type="money" Mode="In" />
+          <Parameter Name="Vudano" Type="money" Mode="In" />
+          <Parameter Name="Procent" Type="money" Mode="In" />
+          <Parameter Name="Opisanie" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Date_Start" Type="date" Mode="In" />
+          <Parameter Name="Date_Finish" Type="date" Mode="In" />
+          <Parameter Name="Ves_All" Type="float" Mode="In" />
+          <Parameter Name="Ves_zachet" Type="float" Mode="In" />
+          <Parameter Name="DogovorID" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="stp_insert_Prodlenie" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="pro">
+          <Parameter Name="Dogovor_Id" Type="int" Mode="In" />
+          <Parameter Name="Date_start_prod" Type="date" Mode="In" />
+          <Parameter Name="Date_finish_prod" Type="date" Mode="In" />
+          <Parameter Name="Price" Type="money" Mode="In" />
+          <Parameter Name="ProdlenieID" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="stp_Poisc_FIO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="pro">
+          <Parameter Name="symbol" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="stp_Poisc_tel" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="pro">
+          <Parameter Name="symbol" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="stp_Prodlenia_Dogovor_ID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="pro">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="stp_Prosrochka" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="pro" />
+        <Function Name="stp_Update_Archiv_dogovor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="pro">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="Client_Id" Type="int" Mode="In" />
+          <Parameter Name="ID_Dogovor" Type="int" Mode="In" />
+          <Parameter Name="Predmet" Type="nvarchar" Mode="In" />
+          <Parameter Name="Ocenochna_stoimost" Type="money" Mode="In" />
+          <Parameter Name="Vudano" Type="money" Mode="In" />
+          <Parameter Name="Procent" Type="money" Mode="In" />
+          <Parameter Name="Opisanie" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Date_Start" Type="date" Mode="In" />
+          <Parameter Name="Date_Finish" Type="date" Mode="In" />
+          <Parameter Name="Date_Start_prod" Type="date" Mode="In" />
+          <Parameter Name="Date_Finish_prod" Type="date" Mode="In" />
+          <Parameter Name="Ves_All" Type="float" Mode="In" />
+          <Parameter Name="Ves_zachet" Type="float" Mode="In" />
+        </Function>
+        <Function Name="stp_Update_Arhiv_prod" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="pro">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="Dogovor_Id" Type="int" Mode="In" />
+          <Parameter Name="ID_Prodlenie" Type="int" Mode="In" />
+          <Parameter Name="Date_Start_prod" Type="date" Mode="In" />
+          <Parameter Name="Date_Finish_prod" Type="date" Mode="In" />
+          <Parameter Name="Price" Type="money" Mode="In" />
+        </Function>
+        <Function Name="stp_Update_Client" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="pro">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="Name_" Type="nvarchar" Mode="In" />
+          <Parameter Name="Father_name" Type="nvarchar" Mode="In" />
+          <Parameter Name="Surname" Type="nvarchar" Mode="In" />
+          <Parameter Name="Tel" Type="nvarchar" Mode="In" />
+          <Parameter Name="BD" Type="date" Mode="In" />
+          <Parameter Name="Seria_pasport" Type="nvarchar" Mode="In" />
+          <Parameter Name="Number_pasport" Type="nvarchar" Mode="In" />
+          <Parameter Name="Vudan" Type="nvarchar" Mode="In" />
+          <Parameter Name="INN" Type="nvarchar" Mode="In" />
+          <Parameter Name="Propiska" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="stp_Update_Dogovor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="pro">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="Client_Id" Type="int" Mode="In" />
+          <Parameter Name="Predmet" Type="nvarchar" Mode="In" />
+          <Parameter Name="Ocenochna_stoimost" Type="money" Mode="In" />
+          <Parameter Name="Vudano" Type="money" Mode="In" />
+          <Parameter Name="Procent" Type="money" Mode="In" />
+          <Parameter Name="Opisanie" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Date_Start" Type="date" Mode="In" />
+          <Parameter Name="Date_Finish" Type="date" Mode="In" />
+          <Parameter Name="Date_Start_prod" Type="date" Mode="In" />
+          <Parameter Name="Date_Finish_prod" Type="date" Mode="In" />
+          <Parameter Name="Ves_All" Type="float" Mode="In" />
+          <Parameter Name="Ves_zachet" Type="float" Mode="In" />
+        </Function>
+        <Function Name="stp_Update_Prodlenie" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="pro">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="Dogovor_Id" Type="int" Mode="In" />
+          <Parameter Name="Date_Start_prod" Type="date" Mode="In" />
+          <Parameter Name="Date_Finish_prod" Type="date" Mode="In" />
+          <Parameter Name="Price" Type="money" Mode="In" />
+        </Function>
+        <EntityContainer Name="Хранилище Lombard_newModelContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Archiv_dogovor" EntityType="Self.Archiv_dogovor" Schema="pro" store:Type="Tables" />
+          <EntitySet Name="Archiv_prod" EntityType="Self.Archiv_prod" Schema="pro" store:Type="Tables" />
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="pro" store:Type="Tables" />
+          <EntitySet Name="Dogovor" EntityType="Self.Dogovor" Schema="pro" store:Type="Tables" />
+          <EntitySet Name="Prodlenie" EntityType="Self.Prodlenie" Schema="pro" store:Type="Tables" />
+          <AssociationSet Name="FK_Archiv_dogovor_Client" Association="Self.FK_Archiv_dogovor_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Archiv_dogovor" EntitySet="Archiv_dogovor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Archiv_prod_Archiv_dogovor" Association="Self.FK_Archiv_prod_Archiv_dogovor">
+            <End Role="Archiv_dogovor" EntitySet="Archiv_dogovor" />
+            <End Role="Archiv_prod" EntitySet="Archiv_prod" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dogovor_Client" Association="Self.FK_Dogovor_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Dogovor" EntitySet="Dogovor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Prodlenie_Dogovor" Association="Self.FK_Prodlenie_Dogovor">
+            <End Role="Dogovor" EntitySet="Dogovor" />
+            <End Role="Prodlenie" EntitySet="Prodlenie" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Lombard_newModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Archiv_dogovor">
+          <Key>
+            <PropertyRef Name="ID_Archiv_dogovor" />
+          </Key>
+          <Property Name="ID_Archiv_dogovor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Client_Id" Type="Int32" Nullable="false" />
+          <Property Name="ID_Dogovor" Type="Int32" Nullable="false" />
+          <Property Name="Predmet" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Ocenochna_stoimost" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Vudano" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Procent" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Opisanie" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date_Start" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Date_Finish" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Date_Start_prod" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Date_Finish_prod" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Ves_All" Type="Double" Nullable="false" />
+          <Property Name="Ves_zachet" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Archiv_dogovor_Client" FromRole="Archiv_dogovor" ToRole="Client" />
+          <NavigationProperty Name="Archiv_prod" Relationship="Self.FK_Archiv_prod_Archiv_dogovor" FromRole="Archiv_dogovor" ToRole="Archiv_prod" />
+        </EntityType>
+        <EntityType Name="Archiv_prod">
+          <Key>
+            <PropertyRef Name="ID_Archiv_prod" />
+          </Key>
+          <Property Name="ID_Archiv_prod" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Dogovor_Id" Type="Int32" Nullable="false" />
+          <Property Name="ID_Prodlenie" Type="Int32" Nullable="false" />
+          <Property Name="Date_start_prod" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Date_finish_prod" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Archiv_dogovor" Relationship="Self.FK_Archiv_prod_Archiv_dogovor" FromRole="Archiv_prod" ToRole="Archiv_dogovor" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ID_Client" />
+          </Key>
+          <Property Name="ID_Client" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name_" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Father_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Tel" Type="String" MaxLength="12" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BD" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Seria_pasport" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Number_pasport" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Vudan" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="INN" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Propiska" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Archiv_dogovor" Relationship="Self.FK_Archiv_dogovor_Client" FromRole="Client" ToRole="Archiv_dogovor" />
+          <NavigationProperty Name="Dogovor" Relationship="Self.FK_Dogovor_Client" FromRole="Client" ToRole="Dogovor" />
+        </EntityType>
+        <EntityType Name="Dogovor">
+          <Key>
+            <PropertyRef Name="ID_Dogovor" />
+          </Key>
+          <Property Name="ID_Dogovor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Client_Id" Type="Int32" Nullable="false" />
+          <Property Name="Predmet" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Ocenochna_stoimost" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Vudano" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Procent" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Opisanie" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date_Start" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Date_Finish" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Date_Start_prod" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Date_Finish_prod" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Ves_All" Type="Double" Nullable="false" />
+          <Property Name="Ves_zachet" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Dogovor_Client" FromRole="Dogovor" ToRole="Client" />
+          <NavigationProperty Name="Prodlenie" Relationship="Self.FK_Prodlenie_Dogovor" FromRole="Dogovor" ToRole="Prodlenie" />
+        </EntityType>
+        <EntityType Name="Prodlenie">
+          <Key>
+            <PropertyRef Name="ID_Prodlenie" />
+          </Key>
+          <Property Name="ID_Prodlenie" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Dogovor_Id" Type="Int32" Nullable="false" />
+          <Property Name="Date_start_prod" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Date_finish_prod" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Dogovor" Relationship="Self.FK_Prodlenie_Dogovor" FromRole="Prodlenie" ToRole="Dogovor" />
+        </EntityType>
+        <Association Name="FK_Archiv_dogovor_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Archiv_dogovor" Type="Self.Archiv_dogovor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ID_Client" />
+            </Principal>
+            <Dependent Role="Archiv_dogovor">
+              <PropertyRef Name="Client_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Archiv_prod_Archiv_dogovor">
+          <End Role="Archiv_dogovor" Type="Self.Archiv_dogovor" Multiplicity="1" />
+          <End Role="Archiv_prod" Type="Self.Archiv_prod" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Archiv_dogovor">
+              <PropertyRef Name="ID_Archiv_dogovor" />
+            </Principal>
+            <Dependent Role="Archiv_prod">
+              <PropertyRef Name="Dogovor_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dogovor_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Dogovor" Type="Self.Dogovor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ID_Client" />
+            </Principal>
+            <Dependent Role="Dogovor">
+              <PropertyRef Name="Client_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Prodlenie_Dogovor">
+          <End Role="Dogovor" Type="Self.Dogovor" Multiplicity="1" />
+          <End Role="Prodlenie" Type="Self.Prodlenie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dogovor">
+              <PropertyRef Name="ID_Dogovor" />
+            </Principal>
+            <Dependent Role="Prodlenie">
+              <PropertyRef Name="Dogovor_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Lombard_newEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Archiv_dogovor" EntityType="Self.Archiv_dogovor" />
+          <EntitySet Name="Archiv_prod" EntityType="Self.Archiv_prod" />
+          <EntitySet Name="Client" EntityType="Self.Client" />
+          <EntitySet Name="Dogovor" EntityType="Self.Dogovor" />
+          <EntitySet Name="Prodlenie" EntityType="Self.Prodlenie" />
+          <AssociationSet Name="FK_Archiv_dogovor_Client" Association="Self.FK_Archiv_dogovor_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Archiv_dogovor" EntitySet="Archiv_dogovor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Archiv_prod_Archiv_dogovor" Association="Self.FK_Archiv_prod_Archiv_dogovor">
+            <End Role="Archiv_dogovor" EntitySet="Archiv_dogovor" />
+            <End Role="Archiv_prod" EntitySet="Archiv_prod" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dogovor_Client" Association="Self.FK_Dogovor_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Dogovor" EntitySet="Dogovor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Prodlenie_Dogovor" Association="Self.FK_Prodlenie_Dogovor">
+            <End Role="Dogovor" EntitySet="Dogovor" />
+            <End Role="Prodlenie" EntitySet="Prodlenie" />
+          </AssociationSet>
+          <FunctionImport Name="Day_Now" ReturnType="Collection(Lombard_newModel.Day_Now_Result)" />
+          <FunctionImport Name="stp_Arhiv_Dogovor_Prodlenia" ReturnType="Collection(Lombard_newModel.stp_Arhiv_Dogovor_Prodlenia_Result)">
+          <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_Delete_Archiv_dogovor">
+          <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_Delete_Archiv_prod">
+          <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_Delete_Client">
+          <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_Delete_Dogovor">
+          <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_Delete_Prodlenie">
+          <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_Dogovor_Client_ID" ReturnType="Collection(Lombard_newModel.stp_Dogovor_Client_ID_Result)">
+          <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_Dogovor_Update_Date">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="Date_Start_prod" Mode="In" Type="DateTime" />
+            <Parameter Name="Date_Finish_prod" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="stp_Info_Archiv_dogovor" ReturnType="Collection(Lombard_newModel.stp_Info_Archiv_dogovor_Result)" />
+          <FunctionImport Name="stp_Info_Client" ReturnType="Collection(Lombard_newModel.stp_Info_Client_Result)" />
+          <FunctionImport Name="stp_Info_Dogovor" ReturnType="Collection(Lombard_newModel.stp_Info_Dogovor_Result)" />
+          <FunctionImport Name="stp_insert_Archiv_dogovor">
+            <Parameter Name="Client_Id" Mode="In" Type="Int32" />
+            <Parameter Name="ID_Dogovor" Mode="In" Type="Int32" />
+            <Parameter Name="Predmet" Mode="In" Type="String" />
+            <Parameter Name="Ocenochna_stoimost" Mode="In" Type="Decimal" />
+            <Parameter Name="Vudano" Mode="In" Type="Decimal" />
+            <Parameter Name="Procent" Mode="In" Type="Decimal" />
+            <Parameter Name="Opisanie" Mode="In" Type="String" />
+            <Parameter Name="Date_Start" Mode="In" Type="DateTime" />
+            <Parameter Name="Date_Finish" Mode="In" Type="DateTime" />
+            <Parameter Name="Date_Start_prod" Mode="In" Type="DateTime" />
+            <Parameter Name="Date_Finish_prod" Mode="In" Type="DateTime" />
+            <Parameter Name="Ves_All" Mode="In" Type="Double" />
+            <Parameter Name="Ves_zachet" Mode="In" Type="Double" />
+          </FunctionImport>
+          <FunctionImport Name="stp_insert_Arhiv_Prodlenie">
+            <Parameter Name="Dogovor_Id" Mode="In" Type="Int32" />
+            <Parameter Name="ID_Prodlenie" Mode="In" Type="Int32" />
+            <Parameter Name="Date_start_prod" Mode="In" Type="DateTime" />
+            <Parameter Name="Date_finish_prod" Mode="In" Type="DateTime" />
+            <Parameter Name="Price" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="stp_insert_Client">
+            <Parameter Name="Name_" Mode="In" Type="String" />
+            <Parameter Name="Father_name" Mode="In" Type="String" />
+            <Parameter Name="Surname" Mode="In" Type="String" />
+            <Parameter Name="Tel" Mode="In" Type="String" />
+            <Parameter Name="BD" Mode="In" Type="DateTime" />
+            <Parameter Name="Seria_pasport" Mode="In" Type="String" />
+            <Parameter Name="Number_pasport" Mode="In" Type="String" />
+            <Parameter Name="Vudan" Mode="In" Type="String" />
+            <Parameter Name="INN" Mode="In" Type="String" />
+            <Parameter Name="Propiska" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="stp_insert_Dogovor">
+            <Parameter Name="Client_Id" Mode="In" Type="Int32" />
+            <Parameter Name="Predmet" Mode="In" Type="String" />
+            <Parameter Name="Ocenochna_stoimost" Mode="In" Type="Decimal" />
+            <Parameter Name="Vudano" Mode="In" Type="Decimal" />
+            <Parameter Name="Procent" Mode="In" Type="Decimal" />
+            <Parameter Name="Opisanie" Mode="In" Type="String" />
+            <Parameter Name="Date_Start" Mode="In" Type="DateTime" />
+            <Parameter Name="Date_Finish" Mode="In" Type="DateTime" />
+            <Parameter Name="Ves_All" Mode="In" Type="Double" />
+            <Parameter Name="Ves_zachet" Mode="In" Type="Double" />
+            <Parameter Name="DogovorID" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_insert_Prodlenie">
+            <Parameter Name="Dogovor_Id" Mode="In" Type="Int32" />
+            <Parameter Name="Date_start_prod" Mode="In" Type="DateTime" />
+            <Parameter Name="Date_finish_prod" Mode="In" Type="DateTime" />
+            <Parameter Name="Price" Mode="In" Type="Decimal" />
+            <Parameter Name="ProdlenieID" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_Poisc_FIO" ReturnType="Collection(Lombard_newModel.stp_Poisc_FIO_Result)">
+          <Parameter Name="symbol" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="stp_Poisc_tel" ReturnType="Collection(Lombard_newModel.stp_Poisc_tel_Result)">
+          <Parameter Name="symbol" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="stp_Prodlenia_Dogovor_ID" ReturnType="Collection(Lombard_newModel.stp_Prodlenia_Dogovor_ID_Result)">
+          <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="stp_Prosrochka" ReturnType="Collection(Lombard_newModel.stp_Prosrochka_Result)" />
+          <FunctionImport Name="stp_Update_Archiv_dogovor">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="Client_Id" Mode="In" Type="Int32" />
+            <Parameter Name="ID_Dogovor" Mode="In" Type="Int32" />
+            <Parameter Name="Predmet" Mode="In" Type="String" />
+            <Parameter Name="Ocenochna_stoimost" Mode="In" Type="Decimal" />
+            <Parameter Name="Vudano" Mode="In" Type="Decimal" />
+            <Parameter Name="Procent" Mode="In" Type="Decimal" />
+            <Parameter Name="Opisanie" Mode="In" Type="String" />
+            <Parameter Name="Date_Start" Mode="In" Type="DateTime" />
+            <Parameter Name="Date_Finish" Mode="In" Type="DateTime" />
+            <Parameter Name="Date_Start_prod" Mode="In" Type="DateTime" />
+            <Parameter Name="Date_Finish_prod" Mode="In" Type="DateTime" />
+            <Parameter Name="Ves_All" Mode="In" Type="Double" />
+            <Parameter Name="Ves_zachet" Mode="In" Type="Double" />
+          </FunctionImport>
+          <FunctionImport Name="stp_Update_Arhiv_prod">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="Dogovor_Id" Mode="In" Type="Int32" />
+            <Parameter Name="ID_Prodlenie" Mode="In" Type="Int32" />
+            <Parameter Name="Date_Start_prod" Mode="In" Type="DateTime" />
+            <Parameter Name="Date_Finish_prod" Mode="In" Type="DateTime" />
+            <Parameter Name="Price" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="stp_Update_Client">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="Name_" Mode="In" Type="String" />
+            <Parameter Name="Father_name" Mode="In" Type="String" />
+            <Parameter Name="Surname" Mode="In" Type="String" />
+            <Parameter Name="Tel" Mode="In" Type="String" />
+            <Parameter Name="BD" Mode="In" Type="DateTime" />
+            <Parameter Name="Seria_pasport" Mode="In" Type="String" />
+            <Parameter Name="Number_pasport" Mode="In" Type="String" />
+            <Parameter Name="Vudan" Mode="In" Type="String" />
+            <Parameter Name="INN" Mode="In" Type="String" />
+            <Parameter Name="Propiska" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="stp_Update_Dogovor">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="Client_Id" Mode="In" Type="Int32" />
+            <Parameter Name="Predmet" Mode="In" Type="String" />
+            <Parameter Name="Ocenochna_stoimost" Mode="In" Type="Decimal" />
+            <Parameter Name="Vudano" Mode="In" Type="Decimal" />
+            <Parameter Name="Procent" Mode="In" Type="Decimal" />
+            <Parameter Name="Opisanie" Mode="In" Type="String" />
+            <Parameter Name="Date_Start" Mode="In" Type="DateTime" />
+            <Parameter Name="Date_Finish" Mode="In" Type="DateTime" />
+            <Parameter Name="Date_Start_prod" Mode="In" Type="DateTime" />
+            <Parameter Name="Date_Finish_prod" Mode="In" Type="DateTime" />
+            <Parameter Name="Ves_All" Mode="In" Type="Double" />
+            <Parameter Name="Ves_zachet" Mode="In" Type="Double" />
+          </FunctionImport>
+          <FunctionImport Name="stp_Update_Prodlenie">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="Dogovor_Id" Mode="In" Type="Int32" />
+            <Parameter Name="Date_Start_prod" Mode="In" Type="DateTime" />
+            <Parameter Name="Date_Finish_prod" Mode="In" Type="DateTime" />
+            <Parameter Name="Price" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <EntitySet Name="sysdiagrams" EntityType="Lombard_newModel.sysdiagrams" />
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(Lombard_newModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(Lombard_newModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+        </EntityContainer>
+        <ComplexType Name="Day_Now_Result">
+          <Property Type="Int32" Name="ID_Dogovor" Nullable="false" />
+          <Property Type="Int32" Name="Client_Id" Nullable="false" />
+          <Property Type="String" Name="Predmet" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="Ocenochna_stoimost" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="Vudano" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="Procent" Nullable="false" Precision="19" />
+          <Property Type="String" Name="Opisanie" Nullable="false" />
+          <Property Type="DateTime" Name="Date_Start" Nullable="false" />
+          <Property Type="DateTime" Name="Date_Finish" Nullable="false" />
+          <Property Type="DateTime" Name="Date_Start_prod" Nullable="false" />
+          <Property Type="DateTime" Name="Date_Finish_prod" Nullable="false" />
+          <Property Type="Double" Name="Ves_All" Nullable="false" />
+          <Property Type="Double" Name="Ves_zachet" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="stp_Arhiv_Dogovor_Prodlenia_Result">
+          <Property Type="Int32" Name="ID_Archiv_prod" Nullable="false" />
+          <Property Type="Int32" Name="Dogovor_Id" Nullable="false" />
+          <Property Type="Int32" Name="ID_Prodlenie" Nullable="false" />
+          <Property Type="DateTime" Name="Date_start_prod" Nullable="false" />
+          <Property Type="DateTime" Name="Date_finish_prod" Nullable="false" />
+          <Property Type="Decimal" Name="Price" Nullable="false" Precision="19" />
+        </ComplexType>
+        <ComplexType Name="stp_Dogovor_Client_ID_Result">
+          <Property Type="Int32" Name="ID_Dogovor" Nullable="false" />
+          <Property Type="Int32" Name="Client_Id" Nullable="false" />
+          <Property Type="String" Name="Predmet" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="Ocenochna_stoimost" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="Vudano" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="Procent" Nullable="false" Precision="19" />
+          <Property Type="String" Name="Opisanie" Nullable="false" />
+          <Property Type="DateTime" Name="Date_Start" Nullable="false" />
+          <Property Type="DateTime" Name="Date_Finish" Nullable="false" />
+          <Property Type="DateTime" Name="Date_Start_prod" Nullable="false" />
+          <Property Type="DateTime" Name="Date_Finish_prod" Nullable="false" />
+          <Property Type="Double" Name="Ves_All" Nullable="false" />
+          <Property Type="Double" Name="Ves_zachet" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="stp_Info_Archiv_dogovor_Result">
+          <Property Type="Int32" Name="ID_Archiv_dogovor" Nullable="false" />
+          <Property Type="Int32" Name="Client_Id" Nullable="false" />
+          <Property Type="Int32" Name="ID_Dogovor" Nullable="false" />
+          <Property Type="String" Name="Predmet" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="Ocenochna_stoimost" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="Vudano" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="Procent" Nullable="false" Precision="19" />
+          <Property Type="String" Name="Opisanie" Nullable="false" />
+          <Property Type="DateTime" Name="Date_Start" Nullable="false" />
+          <Property Type="DateTime" Name="Date_Finish" Nullable="false" />
+          <Property Type="DateTime" Name="Date_Start_prod" Nullable="false" />
+          <Property Type="DateTime" Name="Date_Finish_prod" Nullable="false" />
+          <Property Type="Double" Name="Ves_All" Nullable="false" />
+          <Property Type="Double" Name="Ves_zachet" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="stp_Info_Client_Result">
+          <Property Type="Int32" Name="ID_Client" Nullable="false" />
+          <Property Type="String" Name="Name_" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="Father_name" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="Surname" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="Tel" Nullable="false" MaxLength="12" />
+          <Property Type="DateTime" Name="BD" Nullable="false" />
+          <Property Type="String" Name="Seria_pasport" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Number_pasport" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Vudan" Nullable="false" MaxLength="300" />
+          <Property Type="String" Name="INN" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Propiska" Nullable="false" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="stp_Info_Dogovor_Result">
+          <Property Type="Int32" Name="ID_Dogovor" Nullable="false" />
+          <Property Type="Int32" Name="Client_Id" Nullable="false" />
+          <Property Type="String" Name="Predmet" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="Ocenochna_stoimost" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="Vudano" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="Procent" Nullable="false" Precision="19" />
+          <Property Type="String" Name="Opisanie" Nullable="false" />
+          <Property Type="DateTime" Name="Date_Start" Nullable="false" />
+          <Property Type="DateTime" Name="Date_Finish" Nullable="false" />
+          <Property Type="DateTime" Name="Date_Start_prod" Nullable="false" />
+          <Property Type="DateTime" Name="Date_Finish_prod" Nullable="false" />
+          <Property Type="Double" Name="Ves_All" Nullable="false" />
+          <Property Type="Double" Name="Ves_zachet" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="stp_Poisc_FIO_Result">
+          <Property Type="Int32" Name="ID_Client" Nullable="false" />
+          <Property Type="String" Name="Name_" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="Father_name" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="Surname" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="Tel" Nullable="false" MaxLength="12" />
+          <Property Type="DateTime" Name="BD" Nullable="false" />
+          <Property Type="String" Name="Seria_pasport" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Number_pasport" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Vudan" Nullable="false" MaxLength="300" />
+          <Property Type="String" Name="INN" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Propiska" Nullable="false" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="stp_Poisc_tel_Result">
+          <Property Type="Int32" Name="ID_Client" Nullable="false" />
+          <Property Type="String" Name="Name_" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="Father_name" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="Surname" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="Tel" Nullable="false" MaxLength="12" />
+          <Property Type="DateTime" Name="BD" Nullable="false" />
+          <Property Type="String" Name="Seria_pasport" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Number_pasport" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Vudan" Nullable="false" MaxLength="300" />
+          <Property Type="String" Name="INN" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Propiska" Nullable="false" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="stp_Prodlenia_Dogovor_ID_Result">
+          <Property Type="Int32" Name="ID_Prodlenie" Nullable="false" />
+          <Property Type="Int32" Name="Dogovor_Id" Nullable="false" />
+          <Property Type="DateTime" Name="Date_start_prod" Nullable="false" />
+          <Property Type="DateTime" Name="Date_finish_prod" Nullable="false" />
+          <Property Type="Decimal" Name="Price" Nullable="false" Precision="19" />
+        </ComplexType>
+        <ComplexType Name="stp_Prosrochka_Result">
+          <Property Type="Int32" Name="ID_Dogovor" Nullable="false" />
+          <Property Type="Int32" Name="Client_Id" Nullable="false" />
+          <Property Type="String" Name="Predmet" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="Ocenochna_stoimost" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="Vudano" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="Procent" Nullable="false" Precision="19" />
+          <Property Type="String" Name="Opisanie" Nullable="false" />
+          <Property Type="DateTime" Name="Date_Start" Nullable="false" />
+          <Property Type="DateTime" Name="Date_Finish" Nullable="false" />
+          <Property Type="DateTime" Name="Date_Start_prod" Nullable="false" />
+          <Property Type="DateTime" Name="Date_Finish_prod" Nullable="false" />
+          <Property Type="Double" Name="Ves_All" Nullable="false" />
+          <Property Type="Double" Name="Ves_zachet" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище Lombard_newModelContainer" CdmEntityContainer="Lombard_newEntities">
+          <EntitySetMapping Name="Archiv_dogovor">
+            <EntityTypeMapping TypeName="Lombard_newModel.Archiv_dogovor">
+              <MappingFragment StoreEntitySet="Archiv_dogovor">
+                <ScalarProperty Name="ID_Archiv_dogovor" ColumnName="ID_Archiv_dogovor" />
+                <ScalarProperty Name="Client_Id" ColumnName="Client_Id" />
+                <ScalarProperty Name="ID_Dogovor" ColumnName="ID_Dogovor" />
+                <ScalarProperty Name="Predmet" ColumnName="Predmet" />
+                <ScalarProperty Name="Ocenochna_stoimost" ColumnName="Ocenochna_stoimost" />
+                <ScalarProperty Name="Vudano" ColumnName="Vudano" />
+                <ScalarProperty Name="Procent" ColumnName="Procent" />
+                <ScalarProperty Name="Opisanie" ColumnName="Opisanie" />
+                <ScalarProperty Name="Date_Start" ColumnName="Date_Start" />
+                <ScalarProperty Name="Date_Finish" ColumnName="Date_Finish" />
+                <ScalarProperty Name="Date_Start_prod" ColumnName="Date_Start_prod" />
+                <ScalarProperty Name="Date_Finish_prod" ColumnName="Date_Finish_prod" />
+                <ScalarProperty Name="Ves_All" ColumnName="Ves_All" />
+                <ScalarProperty Name="Ves_zachet" ColumnName="Ves_zachet" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Archiv_prod">
+            <EntityTypeMapping TypeName="Lombard_newModel.Archiv_prod">
+              <MappingFragment StoreEntitySet="Archiv_prod">
+                <ScalarProperty Name="ID_Archiv_prod" ColumnName="ID_Archiv_prod" />
+                <ScalarProperty Name="Dogovor_Id" ColumnName="Dogovor_Id" />
+                <ScalarProperty Name="ID_Prodlenie" ColumnName="ID_Prodlenie" />
+                <ScalarProperty Name="Date_start_prod" ColumnName="Date_start_prod" />
+                <ScalarProperty Name="Date_finish_prod" ColumnName="Date_finish_prod" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Client">
+            <EntityTypeMapping TypeName="Lombard_newModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="ID_Client" ColumnName="ID_Client" />
+                <ScalarProperty Name="Name_" ColumnName="Name_" />
+                <ScalarProperty Name="Father_name" ColumnName="Father_name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+                <ScalarProperty Name="BD" ColumnName="BD" />
+                <ScalarProperty Name="Seria_pasport" ColumnName="Seria_pasport" />
+                <ScalarProperty Name="Number_pasport" ColumnName="Number_pasport" />
+                <ScalarProperty Name="Vudan" ColumnName="Vudan" />
+                <ScalarProperty Name="INN" ColumnName="INN" />
+                <ScalarProperty Name="Propiska" ColumnName="Propiska" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dogovor">
+            <EntityTypeMapping TypeName="Lombard_newModel.Dogovor">
+              <MappingFragment StoreEntitySet="Dogovor">
+                <ScalarProperty Name="ID_Dogovor" ColumnName="ID_Dogovor" />
+                <ScalarProperty Name="Client_Id" ColumnName="Client_Id" />
+                <ScalarProperty Name="Predmet" ColumnName="Predmet" />
+                <ScalarProperty Name="Ocenochna_stoimost" ColumnName="Ocenochna_stoimost" />
+                <ScalarProperty Name="Vudano" ColumnName="Vudano" />
+                <ScalarProperty Name="Procent" ColumnName="Procent" />
+                <ScalarProperty Name="Opisanie" ColumnName="Opisanie" />
+                <ScalarProperty Name="Date_Start" ColumnName="Date_Start" />
+                <ScalarProperty Name="Date_Finish" ColumnName="Date_Finish" />
+                <ScalarProperty Name="Date_Start_prod" ColumnName="Date_Start_prod" />
+                <ScalarProperty Name="Date_Finish_prod" ColumnName="Date_Finish_prod" />
+                <ScalarProperty Name="Ves_All" ColumnName="Ves_All" />
+                <ScalarProperty Name="Ves_zachet" ColumnName="Ves_zachet" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Prodlenie">
+            <EntityTypeMapping TypeName="Lombard_newModel.Prodlenie">
+              <MappingFragment StoreEntitySet="Prodlenie">
+                <ScalarProperty Name="ID_Prodlenie" ColumnName="ID_Prodlenie" />
+                <ScalarProperty Name="Dogovor_Id" ColumnName="Dogovor_Id" />
+                <ScalarProperty Name="Date_start_prod" ColumnName="Date_start_prod" />
+                <ScalarProperty Name="Date_finish_prod" ColumnName="Date_finish_prod" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Day_Now" FunctionName="Хранилище Lombard_newModel.Day_Now">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Lombard_newModel.Day_Now_Result">
+                <ScalarProperty Name="ID_Dogovor" ColumnName="ID_Dogovor" />
+                <ScalarProperty Name="Client_Id" ColumnName="Client_Id" />
+                <ScalarProperty Name="Predmet" ColumnName="Predmet" />
+                <ScalarProperty Name="Ocenochna_stoimost" ColumnName="Ocenochna_stoimost" />
+                <ScalarProperty Name="Vudano" ColumnName="Vudano" />
+                <ScalarProperty Name="Procent" ColumnName="Procent" />
+                <ScalarProperty Name="Opisanie" ColumnName="Opisanie" />
+                <ScalarProperty Name="Date_Start" ColumnName="Date_Start" />
+                <ScalarProperty Name="Date_Finish" ColumnName="Date_Finish" />
+                <ScalarProperty Name="Date_Start_prod" ColumnName="Date_Start_prod" />
+                <ScalarProperty Name="Date_Finish_prod" ColumnName="Date_Finish_prod" />
+                <ScalarProperty Name="Ves_All" ColumnName="Ves_All" />
+                <ScalarProperty Name="Ves_zachet" ColumnName="Ves_zachet" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stp_Arhiv_Dogovor_Prodlenia" FunctionName="Хранилище Lombard_newModel.stp_Arhiv_Dogovor_Prodlenia">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Lombard_newModel.stp_Arhiv_Dogovor_Prodlenia_Result">
+                <ScalarProperty Name="ID_Archiv_prod" ColumnName="ID_Archiv_prod" />
+                <ScalarProperty Name="Dogovor_Id" ColumnName="Dogovor_Id" />
+                <ScalarProperty Name="ID_Prodlenie" ColumnName="ID_Prodlenie" />
+                <ScalarProperty Name="Date_start_prod" ColumnName="Date_start_prod" />
+                <ScalarProperty Name="Date_finish_prod" ColumnName="Date_finish_prod" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stp_Delete_Archiv_dogovor" FunctionName="Хранилище Lombard_newModel.stp_Delete_Archiv_dogovor" />
+          <FunctionImportMapping FunctionImportName="stp_Delete_Archiv_prod" FunctionName="Хранилище Lombard_newModel.stp_Delete_Archiv_prod" />
+          <FunctionImportMapping FunctionImportName="stp_Delete_Client" FunctionName="Хранилище Lombard_newModel.stp_Delete_Client" />
+          <FunctionImportMapping FunctionImportName="stp_Delete_Dogovor" FunctionName="Хранилище Lombard_newModel.stp_Delete_Dogovor" />
+          <FunctionImportMapping FunctionImportName="stp_Delete_Prodlenie" FunctionName="Хранилище Lombard_newModel.stp_Delete_Prodlenie" />
+          <FunctionImportMapping FunctionImportName="stp_Dogovor_Client_ID" FunctionName="Хранилище Lombard_newModel.stp_Dogovor_Client_ID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Lombard_newModel.stp_Dogovor_Client_ID_Result">
+                <ScalarProperty Name="ID_Dogovor" ColumnName="ID_Dogovor" />
+                <ScalarProperty Name="Client_Id" ColumnName="Client_Id" />
+                <ScalarProperty Name="Predmet" ColumnName="Predmet" />
+                <ScalarProperty Name="Ocenochna_stoimost" ColumnName="Ocenochna_stoimost" />
+                <ScalarProperty Name="Vudano" ColumnName="Vudano" />
+                <ScalarProperty Name="Procent" ColumnName="Procent" />
+                <ScalarProperty Name="Opisanie" ColumnName="Opisanie" />
+                <ScalarProperty Name="Date_Start" ColumnName="Date_Start" />
+                <ScalarProperty Name="Date_Finish" ColumnName="Date_Finish" />
+                <ScalarProperty Name="Date_Start_prod" ColumnName="Date_Start_prod" />
+                <ScalarProperty Name="Date_Finish_prod" ColumnName="Date_Finish_prod" />
+                <ScalarProperty Name="Ves_All" ColumnName="Ves_All" />
+                <ScalarProperty Name="Ves_zachet" ColumnName="Ves_zachet" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stp_Dogovor_Update_Date" FunctionName="Хранилище Lombard_newModel.stp_Dogovor_Update_Date" />
+          <FunctionImportMapping FunctionImportName="stp_Info_Archiv_dogovor" FunctionName="Хранилище Lombard_newModel.stp_Info_Archiv_dogovor">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Lombard_newModel.stp_Info_Archiv_dogovor_Result">
+                <ScalarProperty Name="ID_Archiv_dogovor" ColumnName="ID_Archiv_dogovor" />
+                <ScalarProperty Name="Client_Id" ColumnName="Client_Id" />
+                <ScalarProperty Name="ID_Dogovor" ColumnName="ID_Dogovor" />
+                <ScalarProperty Name="Predmet" ColumnName="Predmet" />
+                <ScalarProperty Name="Ocenochna_stoimost" ColumnName="Ocenochna_stoimost" />
+                <ScalarProperty Name="Vudano" ColumnName="Vudano" />
+                <ScalarProperty Name="Procent" ColumnName="Procent" />
+                <ScalarProperty Name="Opisanie" ColumnName="Opisanie" />
+                <ScalarProperty Name="Date_Start" ColumnName="Date_Start" />
+                <ScalarProperty Name="Date_Finish" ColumnName="Date_Finish" />
+                <ScalarProperty Name="Date_Start_prod" ColumnName="Date_Start_prod" />
+                <ScalarProperty Name="Date_Finish_prod" ColumnName="Date_Finish_prod" />
+                <ScalarProperty Name="Ves_All" ColumnName="Ves_All" />
+                <ScalarProperty Name="Ves_zachet" ColumnName="Ves_zachet" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stp_Info_Client" FunctionName="Хранилище Lombard_newModel.stp_Info_Client">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Lombard_newModel.stp_Info_Client_Result">
+                <ScalarProperty Name="ID_Client" ColumnName="ID_Client" />
+                <ScalarProperty Name="Name_" ColumnName="Name_" />
+                <ScalarProperty Name="Father_name" ColumnName="Father_name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+                <ScalarProperty Name="BD" ColumnName="BD" />
+                <ScalarProperty Name="Seria_pasport" ColumnName="Seria_pasport" />
+                <ScalarProperty Name="Number_pasport" ColumnName="Number_pasport" />
+                <ScalarProperty Name="Vudan" ColumnName="Vudan" />
+                <ScalarProperty Name="INN" ColumnName="INN" />
+                <ScalarProperty Name="Propiska" ColumnName="Propiska" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stp_Info_Dogovor" FunctionName="Хранилище Lombard_newModel.stp_Info_Dogovor">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Lombard_newModel.stp_Info_Dogovor_Result">
+                <ScalarProperty Name="ID_Dogovor" ColumnName="ID_Dogovor" />
+                <ScalarProperty Name="Client_Id" ColumnName="Client_Id" />
+                <ScalarProperty Name="Predmet" ColumnName="Predmet" />
+                <ScalarProperty Name="Ocenochna_stoimost" ColumnName="Ocenochna_stoimost" />
+                <ScalarProperty Name="Vudano" ColumnName="Vudano" />
+                <ScalarProperty Name="Procent" ColumnName="Procent" />
+                <ScalarProperty Name="Opisanie" ColumnName="Opisanie" />
+                <ScalarProperty Name="Date_Start" ColumnName="Date_Start" />
+                <ScalarProperty Name="Date_Finish" ColumnName="Date_Finish" />
+                <ScalarProperty Name="Date_Start_prod" ColumnName="Date_Start_prod" />
+                <ScalarProperty Name="Date_Finish_prod" ColumnName="Date_Finish_prod" />
+                <ScalarProperty Name="Ves_All" ColumnName="Ves_All" />
+                <ScalarProperty Name="Ves_zachet" ColumnName="Ves_zachet" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stp_insert_Archiv_dogovor" FunctionName="Хранилище Lombard_newModel.stp_insert_Archiv_dogovor" />
+          <FunctionImportMapping FunctionImportName="stp_insert_Arhiv_Prodlenie" FunctionName="Хранилище Lombard_newModel.stp_insert_Arhiv_Prodlenie" />
+          <FunctionImportMapping FunctionImportName="stp_insert_Client" FunctionName="Хранилище Lombard_newModel.stp_insert_Client" />
+          <FunctionImportMapping FunctionImportName="stp_insert_Dogovor" FunctionName="Хранилище Lombard_newModel.stp_insert_Dogovor" />
+          <FunctionImportMapping FunctionImportName="stp_insert_Prodlenie" FunctionName="Хранилище Lombard_newModel.stp_insert_Prodlenie" />
+          <FunctionImportMapping FunctionImportName="stp_Poisc_FIO" FunctionName="Хранилище Lombard_newModel.stp_Poisc_FIO">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Lombard_newModel.stp_Poisc_FIO_Result">
+                <ScalarProperty Name="ID_Client" ColumnName="ID_Client" />
+                <ScalarProperty Name="Name_" ColumnName="Name_" />
+                <ScalarProperty Name="Father_name" ColumnName="Father_name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+                <ScalarProperty Name="BD" ColumnName="BD" />
+                <ScalarProperty Name="Seria_pasport" ColumnName="Seria_pasport" />
+                <ScalarProperty Name="Number_pasport" ColumnName="Number_pasport" />
+                <ScalarProperty Name="Vudan" ColumnName="Vudan" />
+                <ScalarProperty Name="INN" ColumnName="INN" />
+                <ScalarProperty Name="Propiska" ColumnName="Propiska" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stp_Poisc_tel" FunctionName="Хранилище Lombard_newModel.stp_Poisc_tel">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Lombard_newModel.stp_Poisc_tel_Result">
+                <ScalarProperty Name="ID_Client" ColumnName="ID_Client" />
+                <ScalarProperty Name="Name_" ColumnName="Name_" />
+                <ScalarProperty Name="Father_name" ColumnName="Father_name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+                <ScalarProperty Name="BD" ColumnName="BD" />
+                <ScalarProperty Name="Seria_pasport" ColumnName="Seria_pasport" />
+                <ScalarProperty Name="Number_pasport" ColumnName="Number_pasport" />
+                <ScalarProperty Name="Vudan" ColumnName="Vudan" />
+                <ScalarProperty Name="INN" ColumnName="INN" />
+                <ScalarProperty Name="Propiska" ColumnName="Propiska" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stp_Prodlenia_Dogovor_ID" FunctionName="Хранилище Lombard_newModel.stp_Prodlenia_Dogovor_ID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Lombard_newModel.stp_Prodlenia_Dogovor_ID_Result">
+                <ScalarProperty Name="ID_Prodlenie" ColumnName="ID_Prodlenie" />
+                <ScalarProperty Name="Dogovor_Id" ColumnName="Dogovor_Id" />
+                <ScalarProperty Name="Date_start_prod" ColumnName="Date_start_prod" />
+                <ScalarProperty Name="Date_finish_prod" ColumnName="Date_finish_prod" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stp_Prosrochka" FunctionName="Хранилище Lombard_newModel.stp_Prosrochka">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Lombard_newModel.stp_Prosrochka_Result">
+                <ScalarProperty Name="ID_Dogovor" ColumnName="ID_Dogovor" />
+                <ScalarProperty Name="Client_Id" ColumnName="Client_Id" />
+                <ScalarProperty Name="Predmet" ColumnName="Predmet" />
+                <ScalarProperty Name="Ocenochna_stoimost" ColumnName="Ocenochna_stoimost" />
+                <ScalarProperty Name="Vudano" ColumnName="Vudano" />
+                <ScalarProperty Name="Procent" ColumnName="Procent" />
+                <ScalarProperty Name="Opisanie" ColumnName="Opisanie" />
+                <ScalarProperty Name="Date_Start" ColumnName="Date_Start" />
+                <ScalarProperty Name="Date_Finish" ColumnName="Date_Finish" />
+                <ScalarProperty Name="Date_Start_prod" ColumnName="Date_Start_prod" />
+                <ScalarProperty Name="Date_Finish_prod" ColumnName="Date_Finish_prod" />
+                <ScalarProperty Name="Ves_All" ColumnName="Ves_All" />
+                <ScalarProperty Name="Ves_zachet" ColumnName="Ves_zachet" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stp_Update_Archiv_dogovor" FunctionName="Хранилище Lombard_newModel.stp_Update_Archiv_dogovor" />
+          <FunctionImportMapping FunctionImportName="stp_Update_Arhiv_prod" FunctionName="Хранилище Lombard_newModel.stp_Update_Arhiv_prod" />
+          <FunctionImportMapping FunctionImportName="stp_Update_Client" FunctionName="Хранилище Lombard_newModel.stp_Update_Client" />
+          <FunctionImportMapping FunctionImportName="stp_Update_Dogovor" FunctionName="Хранилище Lombard_newModel.stp_Update_Dogovor" />
+          <FunctionImportMapping FunctionImportName="stp_Update_Prodlenie" FunctionName="Хранилище Lombard_newModel.stp_Update_Prodlenie" />
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Lombard_newModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Хранилище Lombard_newModel.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Хранилище Lombard_newModel.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Хранилище Lombard_newModel.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Хранилище Lombard_newModel.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Lombard_newModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Хранилище Lombard_newModel.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Lombard_newModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Хранилище Lombard_newModel.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Хранилище Lombard_newModel.sp_upgraddiagrams" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
